@@ -38,7 +38,13 @@ This project is designed to scrape, clean, and structure MIT course catalog data
 <a class="anchor" id="Extraction"></a>
 ### 2.1 Data Extraction
 
-
+### Tools:
+* Python
+* JavaScript
+* HTML
+* JSON
+* Airflow
+* Libraries: urllib, BeautifulSoup, os, D3, and airflow
 
 
 
