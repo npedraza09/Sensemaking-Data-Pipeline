@@ -1,0 +1,17 @@
+http://student.mit.edu/catalog/m1a.html
+http://student.mit.edu/catalog/m1b.html
+http://student.mit.edu/catalog/m1c.html
+http://student.mit.edu/catalog/m2a.html
+http://student.mit.edu/catalog/m2b.html
+http://student.mit.edu/catalog/m2c.html
+http://student.mit.edu/catalog/m3a.html
+http://student.mit.edu/catalog/m3b.html
+http://student.mit.edu/catalog/m4a.html
+http://student.mit.edu/catalog/m4b.html
+http://student.mit.edu/catalog/m4c.html
+http://student.mit.edu/catalog/m4d.html
+http://student.mit.edu/catalog/m4e.html
+http://student.mit.edu/catalog/m4f.html
+http://student.mit.edu/catalog/m4g.html
+http://student.mit.edu/catalog/m5a.html
+http://student.mit.edu/catalog/m5b.html

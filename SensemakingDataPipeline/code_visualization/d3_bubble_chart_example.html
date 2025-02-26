@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>D3: A simple packed Bubble Chart</title>
+  <!-- Load D3 v4 -->
+  <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+  <style type="text/css">
+    /* You can add custom styling here if desired */
+    .bubble {
+      margin: 0 auto;
+      display: block;
+    }
+    text {
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Load your words.js file, which should define "scores" like:
+       var scores = {
+         "Introduction": 99,
+         "to": 119,
+         ...
+       };
+  -->
+  <script src="words.js"></script>
+
+  <script type="text/javascript">
+    // First, transform your 'scores' object into a hierarchical format
+    // that D3's pack layout expects. Each child has a "Name" and "Count".
+    var data = {
+      children: Object.keys(scores).map(function(word) {
+        return {
+          Name: word,
+          Count: scores[word]
+        };
+      })
+    };
+
+    // Set the dimensions of your chart
+    var diameter = 600;
+
+    // Color scale (20-category palette in D3 v4)
+    var color = d3.scaleOrdinal(d3.schemeCategory20);
+
+    // Create a pack layout function
+    var bubble = d3.pack()
+      .size([diameter, diameter])
+      .padding(1.5);
+
+    // Append an SVG to the body
+    var svg = d3.select("body")
+      .append("svg")
+      .attr("width", diameter)
+      .attr("height", diameter)
+      .attr("class", "bubble");
+
+    // Create a root hierarchy node
+    var root = d3.hierarchy(data)
+      .sum(function(d) { return d.Count; });
+
+    // Generate the packed layout
+    var nodes = bubble(root).descendants();
+
+    // Filter out the root node so we only place circles for "leaf" nodes
+    var node = svg.selectAll(".node")
+      .data(nodes)
+      .enter()
+      .filter(function(d){
+        return !d.children; // only leaves
+      })
+      .append("g")
+      .attr("class", "node")
+      .attr("transform", function(d) {
+        return "translate(" + d.x + "," + d.y + ")";
+      });
+
+    // Draw circles
+    node.append("circle")
+      .attr("r", function(d) { return d.r; })
+      .style("fill", function(d, i) { return color(i); });
+
+    // Draw text: word (Name)
+    node.append("text")
+      .attr("dy", ".2em")
+      .style("text-anchor", "middle")
+      .text(function(d) {
+        // Truncate the word if the circle is too small
+        return d.data.Name.substring(0, d.r / 3);
+      })
+      .attr("font-family", "sans-serif")
+      .attr("font-size", function(d) { return d.r / 5; })
+      .attr("fill", "white");
+
+    // Draw text: frequency (Count)
+    node.append("text")
+      .attr("dy", "1.3em")
+      .style("text-anchor", "middle")
+      .text(function(d) {
+        return d.data.Count;
+      })
+      .attr("font-family", "Gill Sans", "Gill Sans MT")
+      .attr("font-size", function(d) { return d.r / 5; })
+      .attr("fill", "white");
+
+    // Optional: adjust the containing frame’s height
+    d3.select(self.frameElement).style("height", diameter + "px");
+  </script>
+</body>
+</html>
