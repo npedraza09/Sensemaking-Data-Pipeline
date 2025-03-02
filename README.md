@@ -14,7 +14,7 @@ This project is designed to scrape, clean, and structure MIT course catalog data
   - Select the assignment.py DAG and switch to the Graph View. Select each task and then select Run
   - Your DAG will generate a words.json file located on the worker_1 airflow server
   - Transfer the words.json file as a .js file to your local machine
-  - In your words.js file, make the word count list equal to a dictionary named scores
+  - In your words.js file, make the word count list equal to a dictionary named "scores"
 4. Navigate to file:///YOUR_PATH_HERE/SensemakingDataPipeline/code_visualization/mitcourses_graph.html in your web browser and check out the results
 
 ## Features
