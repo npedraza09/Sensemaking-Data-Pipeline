@@ -21,7 +21,7 @@ This project is designed to scrape, clean, and structure MIT course catalog data
 - Full ETL pipeline in Airflow
 - Interactive bubble chart providing visual results of the word count
 
-  ### Future Features
+  ## Future Features
 - Choose your own theme from the D3 library
 - Add other metrics for the data
 
