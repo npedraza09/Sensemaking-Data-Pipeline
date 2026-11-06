@@ -1,45 +1,33 @@
-<a href="https://nicopedrazaportfolio.netlify.app/">Back to My Portfolio</a>
+# Sensemaking Data Pipeline
 
-# 🔮 Sensemaking Data Pipeline
+An Airflow pipeline that scrapes MIT's course catalog, cleans the course titles and counts word frequency, then shows the result as an interactive D3 bubble chart. Built for my MIT Professional Certificate in Data Engineering (2024–2025).
 
-This project is designed to scrape, clean, and structure MIT course catalog data for word-frequency analysis while showcasing a fully containerized and orchestrated workflow. Leveraging Python’s urllib and BeautifulSoup for web scraping, the pipeline transforms raw HTML into structured data and then processes it through Docker and Airflow to ensure efficient and modular task execution. The resulting JSON word counts feed into an interactive JavaScript and D3-based bubble chart, providing a visually engaging overview of course content trends. By integrating Python-driven data ingestion and transformation with front-end data storytelling, this project demonstrates an end-to-end solution for extracting insights from unstructured web data.
+## How it works
 
+The DAG in `SensemakingDataPipeline/airflow-docker/dags/assignment.py` runs these steps in order:
 
-## Steps to run the pipeline
-1. Either fork or download the folder in this repository and open it in your code editor
-2. Install all necessary dependencies on your machine
-3. If you want to generate your own words.js file, do the following:
-  - In your terminal, inside the airflow-docker folder, run `docker compose up` to create and run the containers
-  - Open a browser window and navigate to https://localhost:8080/. You should arrive at the Airflow login page. Enter “airflow” for both the username and password
-  - Select the assignment.py DAG and switch to the Graph View. Select each task and then select Run
-  - Your DAG will generate a words.json file located on the worker_1 airflow server
-  - Transfer the words.json file as a .js file to your local machine
-  - In your words.js file, make the word count list equal to a dictionary named "scores"
-4. Navigate to file:///YOUR_PATH_HERE/SensemakingDataPipeline/code_visualization/mitcourses_graph.html in your web browser and check out the results
+1. **Catalog:** download each catalog page listed in `urls.txt` (urllib).
+2. **Combine:** merge the pages into one file.
+3. **Titles:** extract the course titles (the `<h3>` tags) with BeautifulSoup and save them as JSON.
+4. **Clean:** remove punctuation, numbers and one-letter words.
+5. **Count words:** count how often each word appears and save `words.json`.
 
-## Features
-- Full ETL pipeline in Airflow
-- Interactive bubble chart providing visual results of the word count
+`code_visualization/mitcourses_graph.html` reads those counts and draws the bubble chart.
 
-  ## Future Features
-- Choose your own theme from the D3 library
-- Add other metrics for the data
+**Built with:** Python, Apache Airflow, Docker, BeautifulSoup, JavaScript, D3.js
 
-## Tools:
-* Python
-* JavaScript
-* HTML
-* JSON
-* Airflow
-* Libraries: urllib, BeautifulSoup, os, D3, and airflow
+## Run it locally
 
-## What the project looks like
+You need Docker.
 
-<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/3fa4e5be-5de2-4ef3-a77c-9b2e0ba0f9cb" />
+1. From `SensemakingDataPipeline/airflow-docker/`, run `docker compose up`.
+2. Open http://localhost:8080 and sign in to Airflow (username and password `airflow`).
+3. Open the `Project` DAG (defined in `assignment.py`), switch to Graph view and run each task in order.
+4. Copy `words.json` from the Airflow worker to `code_visualization/words.js`, setting the word counts to a variable named `scores`.
+5. Open `code_visualization/mitcourses_graph.html` in your browser.
 
-<img width="800" height="400" alt="image" src="https://github.com/user-attachments/assets/9c2f81b9-a4f2-4334-ae20-9545d109443b" />
+## Screenshots
 
+<img width="800" height="400" alt="Sensemaking Data Pipeline screenshot" src="https://github.com/user-attachments/assets/3fa4e5be-5de2-4ef3-a77c-9b2e0ba0f9cb" />
 
-
-
-
+<img width="800" height="400" alt="Sensemaking Data Pipeline screenshot" src="https://github.com/user-attachments/assets/9c2f81b9-a4f2-4334-ae20-9545d109443b" />
